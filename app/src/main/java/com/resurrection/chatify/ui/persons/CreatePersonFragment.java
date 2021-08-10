@@ -8,6 +8,7 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.room.Database;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +16,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.resurrection.chatify.R;
 import com.resurrection.chatify.data.db.entity.PersonEntity;
 import com.resurrection.chatify.ui.base.ChatViewModel;
@@ -28,7 +31,8 @@ public class CreatePersonFragment extends Fragment {
     private Button cancel, save;
     ChatViewModel chatViewModel;
     EditText name, surname, phone;
-
+    FirebaseDatabase firebaseDatabase;
+    DatabaseReference databaseReference;
 
     private void init() {
         cancel = mView.findViewById(R.id.buttonCancel);
@@ -73,6 +77,11 @@ public class CreatePersonFragment extends Fragment {
             }
         });
         chatViewModel.insertPerson(new PersonEntity(idCreater(), name, surname, phone,false));
+
+        firebaseDatabase = FirebaseDatabase.getInstance();
+        databaseReference = firebaseDatabase.getReference();
+        databaseReference.child("users").child("persons").child("person").setValue(name);
+
 
     }
 
