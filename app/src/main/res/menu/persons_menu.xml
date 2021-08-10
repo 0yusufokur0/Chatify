@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/addNewTaskBtn"
+        android:icon="@drawable/search"
+        app:showAsAction="always">
+
+    </item>
+
+
+
+
+    <item
+        android:id="@+id/newContact"
+        android:title="New Contact"></item>
+
+
+    <item
+        android:id="@+id/newGroup"
+        android:title="New Group"></item>
+
+    <item
+        android:id="@+id/inviteAFriend"
+        android:title="Invite a friend"></item>
+
+
+
+
+</menu>
