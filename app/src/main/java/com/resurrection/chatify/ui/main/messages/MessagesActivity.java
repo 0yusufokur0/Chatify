@@ -42,13 +42,21 @@ public class MessagesActivity extends AppCompatActivity {
         getAndSetItems();
         long personId = getIntent().getLongExtra("personId",-1);
 
+
+
         send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                System.out.println(personId);
+
                 // burada ki is me yi personId olarak değiştireceğiz ve kontrolde person Id üzerinden Yapacağınz
+                if (editMessage.getText().toString().equals("1")){
                     chatViewModel.insertMessage(new MessageEntity(idCreater(),personId,editMessage.getText().toString(),getDate(),true,true));
 
+                }else{
+                    chatViewModel.insertMessage(new MessageEntity(idCreater(),personId,editMessage.getText().toString(),getDate(),false,false));
+
+                }
+                editMessage.setText("");
 
             }
         });

@@ -1,6 +1,7 @@
 package com.resurrection.chatify.data.repository;
 
 import android.app.Application;
+import android.os.AsyncTask;
 
 import androidx.lifecycle.LiveData;
 
@@ -28,15 +29,106 @@ public class ChatRepository {
         messageData = chatDao.getAllMessage();
     }
 
-    public void insertPerson(PersonEntity personEntity) {
-        Thread thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                chatDao.InsertPerson(personEntity);
-            }
-        });
-        thread.start();
+
+    public LiveData<List<PersonEntity>> getAllPerson() {
+        return personData;
     }
+
+
+    public LiveData<List<ChatEntity>> getAllChat() {
+        return chatData;
+    }
+
+    public LiveData<List<MessageEntity>> getAllMessage() {
+        return messageData;
+    }
+
+
+
+
+    public void insertPerson(PersonEntity personEntity) {
+        new InsertPersonAsyncPerson(chatDao).execute(personEntity);
+    }
+    public PersonEntity getPerson(Long id) {
+        return chatDao.getPerson(id);
+    }
+
+
+    public void insertChat(ChatEntity chatEntity) {
+        System.out.println("yeni chat eklendi");
+        new InsertChatAysncTask(chatDao).execute(chatEntity);
+    }
+
+    public void insertMessage(MessageEntity messageEntity) {
+        new InsertMessageAysncTask(chatDao).execute(messageEntity);
+
+    }
+
+
+
+
+
+
+    class InsertMessageAysncTask extends AsyncTask<MessageEntity,Void,Void>{
+        ChatDao chatDao;
+
+        public InsertMessageAysncTask(ChatDao chatDao) {
+            this.chatDao = chatDao;
+        }
+
+        @Override
+        protected Void doInBackground(MessageEntity... messageEntities) {
+            chatDao.InsertMessage(messageEntities[0]);
+            return null;
+        }
+    }
+
+    class InsertChatAysncTask extends AsyncTask<ChatEntity,Void,Void>{
+        ChatDao chatDao;
+
+        public InsertChatAysncTask(ChatDao chatDao) {
+            this.chatDao = chatDao;
+        }
+
+
+        @Override
+        protected Void doInBackground(ChatEntity... chatEntities) {
+            chatDao.InsertChat(chatEntities[0]);
+
+            return null;
+        }
+    }
+
+
+    class InsertPersonAsyncPerson extends AsyncTask<PersonEntity,Void,Void>{
+        ChatDao chatDao;
+
+        public InsertPersonAsyncPerson(ChatDao chatDao) {
+            this.chatDao = chatDao;
+        }
+
+        @Override
+        protected Void doInBackground(PersonEntity... personEntities) {
+            chatDao.InsertPerson(personEntities[0]);
+            return null;
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     public void updatePerson(PersonEntity personEntity) {
         Thread thread = new Thread(new Runnable() {
@@ -60,34 +152,13 @@ public class ChatRepository {
     
 
 
-    public LiveData<List<PersonEntity>> getAllPerson() {
-        return personData;
-    }
 
-
-    public PersonEntity getPerson(Long id) {
-/*        Thread thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-            }
-        });
-        thread.start();*/
-        return chatDao.getPerson(id);
-    }
     
     
     
 
 
-    public void insertChat(ChatEntity chatEntity) {
-        Thread thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                chatDao.InsertChat(chatEntity);
-            }
-        });
-        thread.start();
-    }
+
 
     public void updateChat(ChatEntity chatEntity) {
         Thread thread = new Thread(new Runnable() {
@@ -110,19 +181,20 @@ public class ChatRepository {
 
 
 
-    public LiveData<List<ChatEntity>> getAllChat() {
-        return chatData;
-    }
 
-    public void insertMessage(MessageEntity messageEntity) {
-        Thread thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                chatDao.InsertMessage(messageEntity);
-            }
-        });
-        thread.start();
-    }
+
+
+
+
+
+
+
+
+
+
+
+
+
     public void updateMessage(MessageEntity messageEntity) {
         Thread thread = new Thread(new Runnable() {
             @Override
@@ -144,9 +216,6 @@ public class ChatRepository {
     }
 
 
-        public LiveData<List<MessageEntity>> getAllMessage() {
-        return messageData;
-    }
 
 
 

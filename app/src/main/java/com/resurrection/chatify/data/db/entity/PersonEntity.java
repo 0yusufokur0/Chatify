@@ -19,11 +19,15 @@ public class PersonEntity {
     @ColumnInfo(name = "phone")
     private String phone;
 
-    public PersonEntity(long id, String name, String surname, String phone) {
+    @ColumnInfo(name = "chatState")
+    private boolean chatState;
+
+    public PersonEntity(long id, String name, String surname, String phone, boolean chatState) {
         this.id = id;
         this.name = name;
         this.surname = surname;
         this.phone = phone;
+        this.chatState = chatState;
     }
 
     public long getId() {
@@ -56,5 +60,13 @@ public class PersonEntity {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public boolean isChatState() {
+        return chatState;
+    }
+
+    public void setChatState(boolean chatState) {
+        this.chatState = chatState;
     }
 }

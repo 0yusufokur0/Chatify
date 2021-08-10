@@ -50,7 +50,11 @@ public class ChoosePersonFragment extends Fragment {
             public void onItemClick(PersonEntity personEntity) {
                 // ınsert message
                 // eğer o kişi ile ilgili chat varsa yeni chat yapma
-                chatViewModel.insertChat(new ChatEntity(idCreater(),personEntity.getId(),"",true,getDate()));
+                if (!personEntity.isChatState()){
+                    chatViewModel.insertChat(new ChatEntity(idCreater(),personEntity.getId(),"",true,getDate()));
+                    chatViewModel.updatePerson(new PersonEntity(personEntity.getId(), personEntity.getName(), personEntity.getSurname(), personEntity.getPhone(), true));
+
+                }
                 Intent intent = new Intent(getActivity(), MessagesActivity.class);
                 intent.putExtra("personId",personEntity.getId());
                 startActivity(intent);

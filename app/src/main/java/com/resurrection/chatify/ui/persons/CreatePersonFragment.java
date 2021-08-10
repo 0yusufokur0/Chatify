@@ -49,6 +49,9 @@ public class CreatePersonFragment extends Fragment {
 
                 if (!name.getText().toString().isEmpty() && !surname.getText().toString().isEmpty() && !phone.getText().toString().isEmpty()) {
                     savePerson(name.getText().toString(), surname.getText().toString(), phone.getText().toString());
+                    name.setText("");
+                    surname.setText("");
+                    phone.setText("");
                 }
 /*
                 requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.manageFrameLayout, new ChoosePersonFragment()).addToBackStack(null).commit();
@@ -69,7 +72,7 @@ public class CreatePersonFragment extends Fragment {
             public void onChanged(List<PersonEntity> personEntities) {
             }
         });
-        chatViewModel.insertPerson(new PersonEntity(idCreater(), name, surname, phone));
+        chatViewModel.insertPerson(new PersonEntity(idCreater(), name, surname, phone,false));
 
     }
 

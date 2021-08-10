@@ -23,11 +23,10 @@ import java.util.List;
 public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatHolder> {
 
     private List<ChatEntity> chatEntities = new ArrayList<>();
-    private ChatViewModel chatViewModel;
     private Context context;
     private List<PersonEntity> personEntities = new ArrayList<>();
-    private ChoosePersonAdapter.OnItemClickListener listener;
-    private ChoosePersonAdapter.OnItemLongClickListener onItemLongClickListener;
+    private ChatAdapter.OnItemClickListener listener;
+    private ChatAdapter.OnItemLongClickListener onItemLongClickListener;
 
 
     @NonNull
@@ -44,7 +43,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatHolder> {
 
 
         PersonEntity personEntity = ChatDatabase.getInstance(context).chatDao().getPerson(currentChatEntity.getPersonId());
-
+        System.out.println("--- >"+personEntity.getId());
         holder.fullName.setText(personEntity.getName());
         holder.lastMessage.setText(currentChatEntity.getDate());
     }
@@ -58,10 +57,8 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatHolder> {
         this.chatEntities = messageEntities;
         notifyDataSetChanged();
     }
-    public void setPerson(List<PersonEntity> personEntities) {
-        this.personEntities = personEntities;
-        notifyDataSetChanged();
-    }
+
+
 
     class ChatHolder extends RecyclerView.ViewHolder {
         private TextView fullName, lastMessage;
@@ -78,24 +75,27 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatHolder> {
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    // change Activty
+                    int position = getAdapterPosition();
+                    if (listener != null && position != RecyclerView.NO_POSITION) {
+                        listener.onItemClick(chatEntities.get(position));
+                    }
                 }
             });
         }
     }
     public interface OnItemClickListener {
-        void onItemClick(PersonEntity personEntity);
+        void onItemClick(ChatEntity chatEntity);
     }
 
     public interface OnItemLongClickListener {
-        void onItemLongClick(PersonEntity personEntity);
+        void onItemLongClick(ChatEntity chatEntity);
     }
 
-    public void setOnItemClickListener(ChoosePersonAdapter.OnItemClickListener listener) {
+    public void setOnItemClickListener(ChatAdapter.OnItemClickListener listener) {
         this.listener = listener;
     }
 
-    public void setOnItemLongClickListener(ChoosePersonAdapter.OnItemLongClickListener onItemLongClickListener) {
+    public void setOnItemLongClickListener(ChatAdapter.OnItemLongClickListener onItemLongClickListener) {
         this.onItemLongClickListener = onItemLongClickListener;
 
     }

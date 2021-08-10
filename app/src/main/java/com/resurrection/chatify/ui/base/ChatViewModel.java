@@ -33,22 +33,40 @@ public class ChatViewModel extends AndroidViewModel {
     public void insertPerson(PersonEntity personEntity){
         chatRepository.insertPerson(personEntity);
     }
-    public void updatePerson(PersonEntity personEntity){
-        chatRepository.updatePerson(personEntity);
+
+
+    public void insertChat(ChatEntity chatEntity){
+        chatRepository.insertChat(chatEntity);
     }
-    public void deletePerson(PersonEntity personEntity){
-        chatRepository.deletePerson(personEntity);
+
+
+
+    public void insertMessage(MessageEntity messageEntity){
+        chatRepository.insertMessage(messageEntity);
     }
-    public LiveData<List<PersonEntity>> getAllPerson(){
-        return personData;
-    }
+
 
     public PersonEntity getPerson(Long id){
         return chatRepository.getPerson(id);
     }
 
-    public void insertChat(ChatEntity chatEntity){
-        chatRepository.insertChat(chatEntity);
+
+    public LiveData<List<MessageEntity>> getAllMessage(){
+        return messageData;
+    }
+    public LiveData<List<PersonEntity>> getAllPerson(){
+        return personData;
+    }
+
+    public LiveData<List<ChatEntity>> getAllChat() {
+        return chatData;
+    }
+
+    public void updatePerson(PersonEntity personEntity){
+        chatRepository.updatePerson(personEntity);
+    }
+    public void deletePerson(PersonEntity personEntity){
+        chatRepository.deletePerson(personEntity);
     }
 
     public void updateChat(ChatEntity chatEntity){
@@ -58,16 +76,11 @@ public class ChatViewModel extends AndroidViewModel {
     public void DeleteChat(ChatEntity chatEntity){
         chatRepository.deleteChat(chatEntity);
     }
+/*
     public LiveData<List<ChatEntity>> getAllChat(){
         return chatData;
     }
-
-    public void insertMessage(MessageEntity messageEntity){
-        chatRepository.insertMessage(messageEntity);
-    }
-    public LiveData<List<MessageEntity>> getAllMessage(){
-        return messageData;
-    }
+*/
 
 
 

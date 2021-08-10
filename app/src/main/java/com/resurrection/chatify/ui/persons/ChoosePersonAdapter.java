@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.resurrection.chatify.R;
+import com.resurrection.chatify.data.db.entity.ChatEntity;
 import com.resurrection.chatify.data.db.entity.PersonEntity;
 
 import java.util.ArrayList;
@@ -20,6 +21,7 @@ public class ChoosePersonAdapter extends RecyclerView.Adapter<ChoosePersonAdapte
     private List<PersonEntity> personEntities = new ArrayList<>();
     private OnItemClickListener listener;
     private OnItemLongClickListener onItemLongClickListener;
+    private List<ChatEntity> chatEntities = new ArrayList<>();
 
     @NonNull
     @Override
@@ -63,11 +65,9 @@ public class ChoosePersonAdapter extends RecyclerView.Adapter<ChoosePersonAdapte
                 @Override
                 public void onClick(View view) {
                     int position = getAdapterPosition();
-                 if (listener != null && position != RecyclerView.NO_POSITION) {
-                            listener.onItemClick(personEntities.get(position));
-
-
-                        }
+                    if (listener != null && position != RecyclerView.NO_POSITION) {
+                        listener.onItemClick(personEntities.get(position));
+                    }
                 }
             });
 

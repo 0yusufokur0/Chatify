@@ -16,7 +16,7 @@
         <entry key="app/src/main/res/layout/fragment_choose_person.xml" value="0.28055555555555556" />
         <entry key="app/src/main/res/layout/fragment_create_person.xml" value="0.2898148148148148" />
         <entry key="app/src/main/res/layout/fragment_status.xml" value="0.20833333333333334" />
-        <entry key="app/src/main/res/layout/message_item.xml" value="0.37864583333333335" />
+        <entry key="app/src/main/res/layout/message_item.xml" value="0.75" />
         <entry key="app/src/main/res/layout/message_item_left.xml" value="0.21354166666666666" />
         <entry key="app/src/main/res/layout/person_item.xml" value="0.28055555555555556" />
         <entry key="app/src/main/res/menu/new_menu.xml" value="0.2898148148148148" />

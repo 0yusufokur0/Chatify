@@ -8,6 +8,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.resurrection.chatify.R;
@@ -51,18 +52,16 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageH
             holder.messageTxtLeft.setVisibility(View.VISIBLE);
             holder.messageDateLeft.setVisibility(View.VISIBLE);
 
-            holder.messageRight.setBackgroundColor(Color.parseColor("#FFFFFF"));
-            holder.messageTxtRight.setText(messageEntity.getMessages());
-            holder.messageDateRight.setText(messageEntity.getDate());
+            holder.messageTxtLeft.setText(messageEntity.getMessages());
+            holder.messageDateLeft.setText(messageEntity.getDate());
         } else {
 
             holder.messageRight.setVisibility(View.VISIBLE);
             holder.messageTxtRight.setVisibility(View.VISIBLE);
             holder.messageDateRight.setVisibility(View.VISIBLE);
 
-            holder.messageLeft.setBackgroundColor(Color.parseColor("#EA0000"));
-            holder.messageTxtLeft.setText(messageEntity.getMessages());
-            holder.messageDateLeft.setText(messageEntity.getDate());
+            holder.messageTxtRight.setText(messageEntity.getMessages());
+            holder.messageDateRight.setText(messageEntity.getDate());
         }
 
 
@@ -80,7 +79,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageH
 
     class MessageHolder extends RecyclerView.ViewHolder {
         TextView messageTxtRight, messageDateRight, messageTxtLeft, messageDateLeft;
-        RelativeLayout messageRight, messageLeft;
+        ConstraintLayout messageRight, messageLeft;
 
         public MessageHolder(@NonNull View itemView) {
             super(itemView);

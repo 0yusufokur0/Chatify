@@ -42,11 +42,12 @@ public class ChatFragment extends Fragment {
     ChatAdapter chatAdapter;
     ChatViewModel chatViewModel;
 
-    private void init(){
+    private void init() {
         recyclerView = mView.findViewById(R.id.chatRecyclerView);
         chatImageBtn = mView.findViewById(R.id.chatImageBtn);
         chatAdapter = new ChatAdapter();
     }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mView = inflater.inflate(R.layout.fragment_chat, container, false);
@@ -55,29 +56,21 @@ public class ChatFragment extends Fragment {
         getAndSetItems();
         ChatDatabase chatDatabase = ChatDatabase.getInstance(getContext());
         ChatDao chatDao = chatDatabase.chatDao();
-/*
-        PersonEntity personEntity = chatDao.getPerson( "7082021193821");
-*/
-/*
-        System.out.println(personEntity.getName());
-*/
 
         chatImageBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(getContext(), ManagePersons.class));
-/*
-                      chatViewModel.insertPerson(new PersonEntity(idCreater(), "sdfsdf", "dfgdfg", "564645465"));
-*/
 
             }
         });
 
-        chatAdapter.setOnItemClickListener(new ChoosePersonAdapter.OnItemClickListener() {
+
+        chatAdapter.setOnItemClickListener(new ChatAdapter.OnItemClickListener() {
             @Override
-            public void onItemClick(PersonEntity personEntity) {
-                Intent intent = new Intent(getActivity(),MessagesActivity.class);
-                intent.putExtra("personId",personEntity.getId());
+            public void onItemClick(ChatEntity chatEntity) {
+                Intent intent = new Intent(getActivity(), MessagesActivity.class);
+                intent.putExtra("personId", chatEntity.getPersonId());
                 startActivity(intent);
             }
         });
@@ -98,7 +91,7 @@ public class ChatFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(chatAdapter);
-        Long personId ,messageId;
+        Long personId, messageId;
         personId = idCreater();
         messageId = idCreater();
 
@@ -114,10 +107,6 @@ public class ChatFragment extends Fragment {
                 chatAdapter.setChat(messageEntities);
             }
         });
-
-
-
-
 
 
     }
