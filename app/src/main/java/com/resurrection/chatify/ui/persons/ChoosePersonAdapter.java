@@ -59,6 +59,18 @@ public class ChoosePersonAdapter extends RecyclerView.Adapter<ChoosePersonAdapte
             lastMessage = itemView.findViewById(R.id.lastMessage);
             checkBox = itemView.findViewById(R.id.checkBox);
 
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int position = getAdapterPosition();
+                 if (listener != null && position != RecyclerView.NO_POSITION) {
+                            listener.onItemClick(personEntities.get(position));
+
+
+                        }
+                }
+            });
+
         }
 
     }

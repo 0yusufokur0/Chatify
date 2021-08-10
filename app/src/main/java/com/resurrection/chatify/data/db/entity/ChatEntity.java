@@ -4,8 +4,8 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-@Entity(tableName = "message")
-public class MessageEntity {
+@Entity(tableName = "chat")
+public class ChatEntity {
 
     @PrimaryKey
     private long id;
@@ -23,7 +23,7 @@ public class MessageEntity {
     private String date;
 
 
-    public MessageEntity(long id, Long personId, String message, boolean messageState, String date) {
+    public ChatEntity(long id, Long personId, String message, boolean messageState, String date) {
         this.id = id;
         this.personId = personId;
         this.message = message;

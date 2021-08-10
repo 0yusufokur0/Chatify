@@ -1,13 +1,12 @@
 package com.resurrection.chatify.data.repository;
 
 import android.app.Application;
-import android.os.AsyncTask;
 
 import androidx.lifecycle.LiveData;
 
 import com.resurrection.chatify.data.ChatDatabase;
 import com.resurrection.chatify.data.db.dao.ChatDao;
-import com.resurrection.chatify.data.db.entity.MessageEntity;
+import com.resurrection.chatify.data.db.entity.ChatEntity;
 import com.resurrection.chatify.data.db.entity.PersonEntity;
 
 import java.util.List;
@@ -16,14 +15,14 @@ public class ChatRepository {
 
     private ChatDao chatDao;
     private LiveData<List<PersonEntity>> personData;
-    private LiveData<List<MessageEntity>> messageData;
+    private LiveData<List<ChatEntity>> chatData;
     private PersonEntity personEntity;
 
     public ChatRepository(Application application) {
         ChatDatabase chatDatabase = ChatDatabase.getInstance(application);
         chatDao = chatDatabase.chatDao();
         personData = chatDao.getAllPerson();
-        messageData = chatDao.getAllMessage();
+        chatData = chatDao.getAllChat();
 
     }
 
@@ -78,30 +77,30 @@ public class ChatRepository {
     
 
 
-    public void insertMessage(MessageEntity messageEntity) {
+    public void insertChat(ChatEntity chatEntity) {
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
-                chatDao.InsertMessage(messageEntity);
+                chatDao.InsertChat(chatEntity);
             }
         });
         thread.start();
     }
 
-    public void updateMessage(MessageEntity messageEntity) {
+    public void updateChat(ChatEntity chatEntity) {
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
-                chatDao.UpdateMessage(messageEntity);
+                chatDao.UpdateChat(chatEntity);
             }
         });
         thread.start();
     }
-    public void deleteMessage(MessageEntity messageEntity) {
+    public void deleteChat(ChatEntity chatEntity) {
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
-                chatDao.DeleteMessage(messageEntity);
+                chatDao.DeleteChat(chatEntity);
             }
         });
         thread.start();
@@ -109,8 +108,8 @@ public class ChatRepository {
 
 
 
-    public LiveData<List<MessageEntity>> getAllMessage() {
-        return messageData;
+    public LiveData<List<ChatEntity>> getAllMessage() {
+        return chatData;
     }
 
 }

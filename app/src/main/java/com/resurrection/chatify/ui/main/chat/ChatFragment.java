@@ -20,12 +20,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
-import android.widget.Toast;
 
 import com.resurrection.chatify.R;
 import com.resurrection.chatify.data.ChatDatabase;
 import com.resurrection.chatify.data.db.dao.ChatDao;
-import com.resurrection.chatify.data.db.entity.MessageEntity;
+import com.resurrection.chatify.data.db.entity.ChatEntity;
 import com.resurrection.chatify.data.db.entity.PersonEntity;
 import com.resurrection.chatify.ui.base.ChatViewModel;
 import com.resurrection.chatify.ui.persons.ManagePersons;
@@ -93,12 +92,14 @@ public class ChatFragment extends Fragment {
         messageId = idCreater();
 
         chatViewModel = ViewModelProviders.of(getActivity()).get(ChatViewModel.class);
+/*
         chatViewModel.insertPerson(new PersonEntity(personId,"deneme","test","sdfsdf"));
-        chatViewModel.insertMessage(new MessageEntity(messageId,personId,"hi guys",true,"6++6+"));
+        chatViewModel.insertChat(new ChatEntity(messageId,personId,"hi guys",true,"6++6+"));
+*/
 
-        chatViewModel.getAllMessage().observe(getActivity(), new Observer<List<MessageEntity>>() {
+        chatViewModel.getAllChat().observe(getActivity(), new Observer<List<ChatEntity>>() {
             @Override
-            public void onChanged(List<MessageEntity> messageEntities) {
+            public void onChanged(List<ChatEntity> messageEntities) {
                 chatAdapter.setMessage(messageEntities);
             }
         });

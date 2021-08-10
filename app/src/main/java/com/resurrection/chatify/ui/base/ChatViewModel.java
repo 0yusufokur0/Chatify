@@ -6,7 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
-import com.resurrection.chatify.data.db.entity.MessageEntity;
+import com.resurrection.chatify.data.db.entity.ChatEntity;
 import com.resurrection.chatify.data.db.entity.PersonEntity;
 import com.resurrection.chatify.data.repository.ChatRepository;
 
@@ -16,14 +16,14 @@ public class ChatViewModel extends AndroidViewModel {
 
     private ChatRepository chatRepository;
     LiveData<List<PersonEntity>> personData;
-    LiveData<List<MessageEntity>> messageData;
+    LiveData<List<ChatEntity>> chatData;
 
 
     public ChatViewModel(@NonNull Application application) {
         super(application);
         chatRepository = new ChatRepository(application);
         personData = chatRepository.getAllPerson();
-        messageData = chatRepository.getAllMessage();
+        chatData = chatRepository.getAllMessage();
 
     }
 
@@ -44,19 +44,19 @@ public class ChatViewModel extends AndroidViewModel {
         return chatRepository.getPerson(id);
     }
 
-    public void insertMessage(MessageEntity messageEntity){
-        chatRepository.insertMessage(messageEntity);
+    public void insertChat(ChatEntity chatEntity){
+        chatRepository.insertChat(chatEntity);
     }
 
-    public void updateMessage(MessageEntity messageEntity){
-        chatRepository.updateMessage(messageEntity);
+    public void updateChat(ChatEntity chatEntity){
+        chatRepository.updateChat(chatEntity);
     }
 
-    public void deleteMessage(MessageEntity messageEntity){
-        chatRepository.deleteMessage(messageEntity);
+    public void DeleteChat(ChatEntity chatEntity){
+        chatRepository.deleteChat(chatEntity);
     }
-    public LiveData<List<MessageEntity>> getAllMessage(){
-        return messageData;
+    public LiveData<List<ChatEntity>> getAllChat(){
+        return chatData;
     }
 
 

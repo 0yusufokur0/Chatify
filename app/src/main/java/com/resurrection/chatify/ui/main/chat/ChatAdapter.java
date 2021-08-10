@@ -1,6 +1,5 @@
 package com.resurrection.chatify.ui.main.chat;
 
-import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,25 +8,20 @@ import android.widget.CheckBox;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.FragmentActivity;
-import androidx.lifecycle.ViewModel;
-import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.resurrection.chatify.R;
 import com.resurrection.chatify.data.ChatDatabase;
-import com.resurrection.chatify.data.db.dao.ChatDao;
-import com.resurrection.chatify.data.db.entity.MessageEntity;
+import com.resurrection.chatify.data.db.entity.ChatEntity;
 import com.resurrection.chatify.data.db.entity.PersonEntity;
 import com.resurrection.chatify.ui.base.ChatViewModel;
-import com.resurrection.chatify.ui.persons.ManagePersons;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatHolder> {
 
-    private List<MessageEntity> messageEntities = new ArrayList<>();
+    private List<ChatEntity> messageEntities = new ArrayList<>();
     private ChatViewModel chatViewModel;
     private Context context;
     private List<PersonEntity> personEntities = new ArrayList<>();
@@ -38,19 +32,19 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatHolder> {
     @Override
     public ChatHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.chat_item, parent, false);
-        context =parent.getContext();
+        context = parent.getContext();
         return new ChatHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ChatHolder holder, int position) {
-        MessageEntity currentMessageEntity = messageEntities.get(position);
+        ChatEntity currentChatEntity = messageEntities.get(position);
 
 
-        PersonEntity personEntity = ChatDatabase.getInstance(context).chatDao().getPerson(currentMessageEntity.getPersonId());
+        PersonEntity personEntity = ChatDatabase.getInstance(context).chatDao().getPerson(currentChatEntity.getPersonId());
 
         holder.fullName.setText(personEntity.getName());
-        holder.lastMessage.setText(currentMessageEntity.getDate());
+        holder.lastMessage.setText(currentChatEntity.getDate());
     }
 
     @Override
@@ -58,7 +52,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatHolder> {
         return messageEntities.size();
     }
 
-    public void setMessage(List<MessageEntity> messageEntities) {
+    public void setMessage(List<ChatEntity> messageEntities) {
         this.messageEntities = messageEntities;
         notifyDataSetChanged();
     }

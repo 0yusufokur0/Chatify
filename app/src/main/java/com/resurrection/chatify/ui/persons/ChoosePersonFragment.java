@@ -1,7 +1,5 @@
 package com.resurrection.chatify.ui.persons;
 
-import static com.resurrection.chatify.data.Constants.idCreater;
-
 import android.content.Context;
 import android.os.Bundle;
 
@@ -15,13 +13,16 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.resurrection.chatify.R;
-import com.resurrection.chatify.data.db.entity.MessageEntity;
+import com.resurrection.chatify.data.db.entity.ChatEntity;
 import com.resurrection.chatify.data.db.entity.PersonEntity;
 import com.resurrection.chatify.ui.base.ChatViewModel;
 
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 public class ChoosePersonFragment extends Fragment {
@@ -46,6 +47,9 @@ public class ChoosePersonFragment extends Fragment {
             @Override
             public void onItemClick(PersonEntity personEntity) {
                 // ınsert message
+                // eğer o kişi ile ilgili chat varsa yeni chat yapma
+                chatViewModel.insertChat(new ChatEntity(idCreater(),personEntity.getId(),"",true,getDate()));
+                Toast.makeText(getActivity(), personEntity.getName()+"", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -76,6 +80,20 @@ public class ChoosePersonFragment extends Fragment {
         };
         requireActivity().getOnBackPressedDispatcher().addCallback(getActivity(), onBackPressedCallback);
 
+    }
+    public long idCreater() {
+        Date nowDateTime = new Date();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("ddMMyyyykkmmss");
+        String date = dateFormat.format(nowDateTime);
+        System.out.println(date);
+        return Long.valueOf(date);
+    }
+    public static String getDate() {
+        java.sql.Date nowDateTime = new java.sql.Date(0);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy-kk:mm");
+        String date = dateFormat.format(nowDateTime);
+        System.out.println(date);
+        return date;
     }
 
 }

@@ -7,7 +7,7 @@ import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
 
-import com.resurrection.chatify.data.db.entity.MessageEntity;
+import com.resurrection.chatify.data.db.entity.ChatEntity;
 import com.resurrection.chatify.data.db.entity.PersonEntity;
 
 import java.util.List;
@@ -31,16 +31,16 @@ public interface ChatDao {
     PersonEntity getLastPerson();
 
     @Insert
-    void InsertMessage(MessageEntity messageEntity);
+    void InsertChat(ChatEntity chatEntity);
 
     @Update
-    void UpdateMessage(MessageEntity messageEntity);
+    void UpdateChat(ChatEntity chatEntity);
 
     @Delete
-    void DeleteMessage(MessageEntity messageEntity);
+    void DeleteChat(ChatEntity chatEntity);
 
-    @Query("SELECT * FROM message ORDER BY id")
-    LiveData<List<MessageEntity>> getAllMessage();
+    @Query("SELECT * FROM chat ORDER BY id")
+    LiveData<List<ChatEntity>> getAllChat();
 
     @Query("SELECT * FROM person WHERE id = :asd")
     PersonEntity getPerson(Long asd);
