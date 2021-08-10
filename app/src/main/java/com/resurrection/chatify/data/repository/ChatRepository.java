@@ -7,6 +7,7 @@ import androidx.lifecycle.LiveData;
 import com.resurrection.chatify.data.ChatDatabase;
 import com.resurrection.chatify.data.db.dao.ChatDao;
 import com.resurrection.chatify.data.db.entity.ChatEntity;
+import com.resurrection.chatify.data.db.entity.MessageEntity;
 import com.resurrection.chatify.data.db.entity.PersonEntity;
 
 import java.util.List;
@@ -16,6 +17,7 @@ public class ChatRepository {
     private ChatDao chatDao;
     private LiveData<List<PersonEntity>> personData;
     private LiveData<List<ChatEntity>> chatData;
+    private LiveData<List<MessageEntity>> messageData;
     private PersonEntity personEntity;
 
     public ChatRepository(Application application) {
@@ -23,7 +25,7 @@ public class ChatRepository {
         chatDao = chatDatabase.chatDao();
         personData = chatDao.getAllPerson();
         chatData = chatDao.getAllChat();
-
+        messageData = chatDao.getAllMessage();
     }
 
     public void insertPerson(PersonEntity personEntity) {
@@ -108,8 +110,46 @@ public class ChatRepository {
 
 
 
-    public LiveData<List<ChatEntity>> getAllMessage() {
+    public LiveData<List<ChatEntity>> getAllChat() {
         return chatData;
     }
+
+    public void insertMessage(MessageEntity messageEntity) {
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                chatDao.InsertMessage(messageEntity);
+            }
+        });
+        thread.start();
+    }
+    public void updateMessage(MessageEntity messageEntity) {
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                chatDao.UpdateMessage(messageEntity);
+            }
+        });
+        thread.start();
+    }
+
+    public void deleteMessage(MessageEntity messageEntity) {
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                chatDao.DeleteMessage(messageEntity);
+            }
+        });
+        thread.start();
+    }
+
+
+        public LiveData<List<MessageEntity>> getAllMessage() {
+        return messageData;
+    }
+
+
+
+
 
 }

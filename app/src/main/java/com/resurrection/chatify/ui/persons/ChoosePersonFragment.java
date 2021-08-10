@@ -1,6 +1,7 @@
 package com.resurrection.chatify.ui.persons;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.activity.OnBackPressedCallback;
@@ -19,6 +20,7 @@ import com.resurrection.chatify.R;
 import com.resurrection.chatify.data.db.entity.ChatEntity;
 import com.resurrection.chatify.data.db.entity.PersonEntity;
 import com.resurrection.chatify.ui.base.ChatViewModel;
+import com.resurrection.chatify.ui.main.messages.MessagesActivity;
 
 
 import java.text.SimpleDateFormat;
@@ -49,7 +51,10 @@ public class ChoosePersonFragment extends Fragment {
                 // ınsert message
                 // eğer o kişi ile ilgili chat varsa yeni chat yapma
                 chatViewModel.insertChat(new ChatEntity(idCreater(),personEntity.getId(),"",true,getDate()));
-                Toast.makeText(getActivity(), personEntity.getName()+"", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getActivity(), MessagesActivity.class);
+                intent.putExtra("personId",personEntity.getId());
+                startActivity(intent);
+                getActivity().finish();
             }
         });
 

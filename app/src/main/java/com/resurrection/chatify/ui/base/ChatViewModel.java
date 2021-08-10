@@ -7,6 +7,7 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
 import com.resurrection.chatify.data.db.entity.ChatEntity;
+import com.resurrection.chatify.data.db.entity.MessageEntity;
 import com.resurrection.chatify.data.db.entity.PersonEntity;
 import com.resurrection.chatify.data.repository.ChatRepository;
 
@@ -17,13 +18,15 @@ public class ChatViewModel extends AndroidViewModel {
     private ChatRepository chatRepository;
     LiveData<List<PersonEntity>> personData;
     LiveData<List<ChatEntity>> chatData;
+    LiveData<List<MessageEntity>> messageData;
 
 
     public ChatViewModel(@NonNull Application application) {
         super(application);
         chatRepository = new ChatRepository(application);
         personData = chatRepository.getAllPerson();
-        chatData = chatRepository.getAllMessage();
+        chatData = chatRepository.getAllChat();
+        messageData = chatRepository.getAllMessage();
 
     }
 
@@ -58,6 +61,14 @@ public class ChatViewModel extends AndroidViewModel {
     public LiveData<List<ChatEntity>> getAllChat(){
         return chatData;
     }
+
+    public void insertMessage(MessageEntity messageEntity){
+        chatRepository.insertMessage(messageEntity);
+    }
+    public LiveData<List<MessageEntity>> getAllMessage(){
+        return messageData;
+    }
+
 
 
 }

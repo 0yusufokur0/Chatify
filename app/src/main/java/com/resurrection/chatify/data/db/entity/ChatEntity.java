@@ -4,6 +4,8 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import java.util.List;
+
 @Entity(tableName = "chat")
 public class ChatEntity {
 
@@ -21,7 +23,6 @@ public class ChatEntity {
 
     @ColumnInfo(name = "date")
     private String date;
-
 
     public ChatEntity(long id, Long personId, String message, boolean messageState, String date) {
         this.id = id;

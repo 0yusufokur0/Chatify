@@ -27,6 +27,8 @@ import com.resurrection.chatify.data.db.dao.ChatDao;
 import com.resurrection.chatify.data.db.entity.ChatEntity;
 import com.resurrection.chatify.data.db.entity.PersonEntity;
 import com.resurrection.chatify.ui.base.ChatViewModel;
+import com.resurrection.chatify.ui.main.messages.MessagesActivity;
+import com.resurrection.chatify.ui.persons.ChoosePersonAdapter;
 import com.resurrection.chatify.ui.persons.ManagePersons;
 
 import java.text.SimpleDateFormat;
@@ -71,6 +73,15 @@ public class ChatFragment extends Fragment {
             }
         });
 
+        chatAdapter.setOnItemClickListener(new ChoosePersonAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(PersonEntity personEntity) {
+                Intent intent = new Intent(getActivity(),MessagesActivity.class);
+                intent.putExtra("personId",personEntity.getId());
+                startActivity(intent);
+            }
+        });
+
         return mView;
     }
 
@@ -100,7 +111,7 @@ public class ChatFragment extends Fragment {
         chatViewModel.getAllChat().observe(getActivity(), new Observer<List<ChatEntity>>() {
             @Override
             public void onChanged(List<ChatEntity> messageEntities) {
-                chatAdapter.setMessage(messageEntities);
+                chatAdapter.setChat(messageEntities);
             }
         });
 

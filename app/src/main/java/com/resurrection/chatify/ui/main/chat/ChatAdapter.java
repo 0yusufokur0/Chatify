@@ -15,17 +15,19 @@ import com.resurrection.chatify.data.ChatDatabase;
 import com.resurrection.chatify.data.db.entity.ChatEntity;
 import com.resurrection.chatify.data.db.entity.PersonEntity;
 import com.resurrection.chatify.ui.base.ChatViewModel;
+import com.resurrection.chatify.ui.persons.ChoosePersonAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatHolder> {
 
-    private List<ChatEntity> messageEntities = new ArrayList<>();
+    private List<ChatEntity> chatEntities = new ArrayList<>();
     private ChatViewModel chatViewModel;
     private Context context;
     private List<PersonEntity> personEntities = new ArrayList<>();
-
+    private ChoosePersonAdapter.OnItemClickListener listener;
+    private ChoosePersonAdapter.OnItemLongClickListener onItemLongClickListener;
 
 
     @NonNull
@@ -38,7 +40,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull ChatHolder holder, int position) {
-        ChatEntity currentChatEntity = messageEntities.get(position);
+        ChatEntity currentChatEntity = chatEntities.get(position);
 
 
         PersonEntity personEntity = ChatDatabase.getInstance(context).chatDao().getPerson(currentChatEntity.getPersonId());
@@ -49,11 +51,11 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatHolder> {
 
     @Override
     public int getItemCount() {
-        return messageEntities.size();
+        return chatEntities.size();
     }
 
-    public void setMessage(List<ChatEntity> messageEntities) {
-        this.messageEntities = messageEntities;
+    public void setChat(List<ChatEntity> messageEntities) {
+        this.chatEntities = messageEntities;
         notifyDataSetChanged();
     }
     public void setPerson(List<PersonEntity> personEntities) {
@@ -72,7 +74,30 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatHolder> {
             lastMessage = itemView.findViewById(R.id.lastMessage);
             checkBox = itemView.findViewById(R.id.checkBox);
 
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    // change Activty
+                }
+            });
         }
+    }
+    public interface OnItemClickListener {
+        void onItemClick(PersonEntity personEntity);
+    }
+
+    public interface OnItemLongClickListener {
+        void onItemLongClick(PersonEntity personEntity);
+    }
+
+    public void setOnItemClickListener(ChoosePersonAdapter.OnItemClickListener listener) {
+        this.listener = listener;
+    }
+
+    public void setOnItemLongClickListener(ChoosePersonAdapter.OnItemLongClickListener onItemLongClickListener) {
+        this.onItemLongClickListener = onItemLongClickListener;
+
     }
 
 }
