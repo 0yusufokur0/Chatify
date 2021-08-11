@@ -14,13 +14,16 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Chatify">
         <activity
+            android:name=".MainActivity"
+            android:exported="true" />
+        <activity
             android:name=".ui.main.messages.MessagesActivity"
             android:exported="true" />
         <activity
             android:name=".ui.persons.ManagePersons"
             android:exported="true" />
         <activity
-            android:name=".MainActivity"
+            android:name=".ui.auth.Auth"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

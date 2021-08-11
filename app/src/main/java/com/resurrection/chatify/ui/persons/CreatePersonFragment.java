@@ -8,7 +8,6 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
-import androidx.room.Database;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +15,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.resurrection.chatify.R;
@@ -23,7 +24,6 @@ import com.resurrection.chatify.data.db.entity.PersonEntity;
 import com.resurrection.chatify.ui.base.ChatViewModel;
 
 import java.util.List;
-import java.util.Objects;
 
 public class CreatePersonFragment extends Fragment {
 
@@ -33,11 +33,13 @@ public class CreatePersonFragment extends Fragment {
     EditText name, surname, phone;
     FirebaseDatabase firebaseDatabase;
     DatabaseReference databaseReference;
+    FirebaseAuth firebaseAuth;
+    FirebaseUser firebaseUser;
 
     private void init() {
         cancel = mView.findViewById(R.id.buttonCancel);
         save = mView.findViewById(R.id.buttonSave);
-        name = mView.findViewById(R.id.editName);
+        name = mView.findViewById(R.id.editNameR);
         surname = mView.findViewById(R.id.editSurname);
         phone = mView.findViewById(R.id.editPhone);
     }
@@ -70,6 +72,8 @@ public class CreatePersonFragment extends Fragment {
     }
 
     private void savePerson(String name, String surname, String phone) {
+        firebaseAuth = FirebaseAuth.getInstance();
+        firebaseUser = firebaseAuth.getCurrentUser();
         chatViewModel = ViewModelProviders.of(getActivity()).get(ChatViewModel.class);
         chatViewModel.getAllPerson().observe(getActivity(), new Observer<List<PersonEntity>>() {
             @Override
@@ -80,7 +84,7 @@ public class CreatePersonFragment extends Fragment {
 
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference();
-        databaseReference.child("users").child("persons").child("person").setValue(name);
+        databaseReference.child("users").child(firebaseUser.getUid()).child("persons").setValue(name);
 
 
     }

@@ -17,7 +17,7 @@
 
 
         <EditText
-            android:id="@+id/editName"
+            android:id="@+id/editNameR"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
@@ -30,7 +30,7 @@
             android:id="@+id/editSurname"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/editName"
+            android:layout_below="@+id/editNameR"
             android:layout_marginTop="20dp"
             android:background="@drawable/text_background"
             android:hint="   Surname"
